@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneBill Power Words</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <section id="login-screen">
+        <img src="one-bill-logo.png" alt="Wetility Logo" class="logo">
+        <h1>HANGMAN - ENERGY EDITION</h1>
+        <h2>System Override: Guess the Keyword to Power Up</h2>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <button type="submit" class="start-btn">⚡ Start Game</button>
+        </form>
+    </section>
+
+    <!-- Game Screen -->
+    <div id="game-screen" style="display: none;">
+        <h2 id="player-greeting"></h2>
+        <img src="one-bill-logo.png" alt="Wetility Logo" class="logo">
+        <h1>HANGMAN - ENERGY EDITION</h1>
+        <h2>System Override: Guess the Keyword to Power Up</h2>
+
+        <div class="battery-container">
+            <div class="battery-level" id="battery-level"></div>
+        </div>
+        <div class="status-text">System Power: <span id="lives-count">6</span> Attempts Remaining</div>
+
+        <div id="word-display"></div>
+        
+        <button id="hint-btn" class="hint-btn">⚡ Need a Hint?</button>
+        <p id="hint-display"></p>
+        
+        <div id="keyboard"></div>
+
+        <!-- Reward Modal -->
+        <div id="reward-modal">
+            <div class="modal-content">
+                <h1 id="modal-title">ACCESS GRANTED!</h1>
+                <p id="modal-message">Congratulations! Claim your <strong>Digital Lucky Ticket</strong> now to spin the prize wheel at the Friday Launch Event.</p>
+                <button class="restart-btn" onclick="resetToLoginScreen()">Next Player / Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
