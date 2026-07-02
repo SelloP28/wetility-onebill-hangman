@@ -168,6 +168,17 @@ function updateBattery() {
     }
 }
 
+function logPlayerData(status) {
+    const dateTime = new Date().toLocaleString('en-ZA');
+    const logs = JSON.parse(localStorage.getItem('eventGameLogs')) || [];
+    logs.push({ dateTime, playerName, playerEmail, status });
+    localStorage.setItem('eventGameLogs', JSON.stringify(logs));
+    
+    // Log to console for debugging
+    console.log("📊 Player Game Log:", { dateTime, playerName, playerEmail, status });
+    console.log("Total Logs:", logs.length);
+}
+
 function saveWinner() {
     // Get existing winners from localStorage or create new array
     let winners = JSON.parse(localStorage.getItem("onebillWinners")) || [];
@@ -196,6 +207,9 @@ function showWinScreen() {
     modalMessage.innerHTML = `Awesome job, <strong>${playerName}</strong>! Your ticket has been logged under <strong>${playerEmail}</strong>. Take a photo of this screen and claim your <strong>Digital Lucky Ticket</strong> to spin the prize wheel at Friday's Launch Event.`;
     modal.style.display = "flex";
     
+    // Log player game data
+    logPlayerData("Success");
+    
     // Save winner to localStorage
     saveWinner();
     
@@ -214,6 +228,9 @@ function showLoseScreen() {
     modalTitle.style.color = "#EF4444"; // Red
     modalMessage.innerHTML = `The correct word was <strong>${currentWord}</strong>. Reset the system and try again.`;
     modal.style.display = "flex";
+    
+    // Log player game data
+    logPlayerData("Failed");
 }
 
 // Allow physical keyboard typing
@@ -254,7 +271,7 @@ function resetToLoginScreen() {
     
     // Clear form inputs
     document.getElementById("full-name").value = "";
-    document.getElementById("email").value = "";
+    document.getElementById("player-email").value = "";
     
     // Reset modal display
     modal.style.display = "none";
@@ -265,8 +282,8 @@ loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     
     // Get form input values
-    playerName = document.getElementById("full-name").value;
-    playerEmail = document.getElementById("email").value;
+    playerName = document.getElementById("full-name").value.trim();
+    playerEmail = document.getElementById("player-email").value.trim();
     
     // Set player greeting
     playerGreeting.textContent = `Welcome, ${playerName}!`;
@@ -277,4 +294,34 @@ loginForm.addEventListener("submit", (e) => {
     
     // Start the game
     initGame();
+});
+
+// Download logs as CSV function
+function downloadLogsCSV() {
+    const logs = JSON.parse(localStorage.getItem('eventGameLogs')) || [];
+    if (logs.length === 0) {
+        alert("No data captured yet.");
+        return;
+    }
+    let csvContent = "Date and Time,Player Name,Email Address,Game Outcome\n";
+    logs.forEach(log => {
+        csvContent += `"${log.dateTime}","${log.playerName}","${log.playerEmail}","${log.status}"\n`;
+    });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "game_winners_log.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Secret key listener for CSV download (Ctrl+Shift+E)
+window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        downloadLogsCSV();
+    }
 });
