@@ -153,8 +153,8 @@ function updateBattery() {
     batteryLevel.style.width = percentage + "%";
     livesCount.innerText = remainingAttempts;
 
-    // Show hint button as lifeline when 2 or fewer attempts remain
-    if (remainingAttempts <= 2) {
+    // Show hint button as lifeline when 4 or fewer attempts remain
+    if (remainingAttempts <= 4) {
         hintBtn.style.display = "block";
     }
 
