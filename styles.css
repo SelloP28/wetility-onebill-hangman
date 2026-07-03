@@ -135,18 +135,19 @@ h2 {
     font-size: 1rem;
     font-weight: bold;
     background-color: transparent;
-    color: var(--dark-grey);
-    border: 2px solid var(--dark-grey);
+    color: #ffc709;
+    border: 2px solid #ffc709;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     margin-bottom: 15px;
 }
 
 .hint-btn:hover {
-    background-color: var(--dark-grey);
-    color: white;
-    transform: translateY(-2px);
+    background-color: #fe5444;
+    border-color: #fe5444;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .hint-btn:disabled {
